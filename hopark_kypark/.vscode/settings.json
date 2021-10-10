@@ -1,0 +1,8 @@
+{
+	"files.associations": {
+		"stdlib.h": "c",
+		"arraystack.h": "c",
+		"stdio.h": "c",
+		"llstack.h": "c"
+	}
+}
