@@ -5,7 +5,7 @@ ArrayStack* createArrayStack(int maxElementCount){
     int i = -1;
     ret = (ArrayStack *)malloc(sizeof(ArrayStack));
 
-    if (ret == NULL || maxElementCount < 0)
+    if (ret == NULL || maxElementCount <= 0)
         return NULL;
     
     //set initial data

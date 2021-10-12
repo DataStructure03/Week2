@@ -61,7 +61,7 @@ int pushLS(LinkedStack* pStack, StackNode element){
 StackNode* popLS(LinkedStack* pStack){
     StackNode *ret = NULL;
     if (pStack != NULL){
-        if (isLinkedStackEmpty(pStack) == 0){
+        if (isLinkedStackEmpty(pStack) == false){
             // store return node(poped node)
             ret = pStack->pTopElement->preElement;
             // header node is pointing second node(next of ret)
@@ -88,4 +88,56 @@ int isLinkedStackEmpty(LinkedStack* pStack){
         return true;
     else
         return false;
+}
+
+int deleteAndReturn(LinkedStack *stack, int result){
+    deleteLinkedStack(stack);
+    return result;
+}
+
+int checkBracketMatching(char *pSource){
+    LinkedStack *brackets;
+    StackNode node;
+    StackNode *top;
+
+    if (!pSource || pSource[0] == '\0')
+        return false;
+
+    node.preElement = NULL;
+    brackets = createLinkedStack();
+    for (char *symbol = pSource; *symbol; ++symbol){
+        switch (*symbol){
+            case '(': case '{': case '[':
+                node.data = *symbol;
+                pushLS(brackets, node);
+                break;
+        }
+        if ( ! isLinkedStackEmpty(brackets)){
+            switch (*symbol){
+                case ')': 
+                    if (peekLS(brackets)->data != '(') 
+                        return deleteAndReturn(brackets, false);
+                    else
+                        free(popLS(brackets));
+                    break;
+                case '}': 
+                    if (peekLS(brackets)->data != '{') 
+                        return deleteAndReturn(brackets, false);
+                    else
+                        free(popLS(brackets));
+                    break;
+                case ']': 
+                    if (peekLS(brackets)->data != '[')
+                        return deleteAndReturn(brackets, false);
+                    else
+                        free(popLS(brackets));
+                    break;
+            }
+        }
+    }
+
+    if (isLinkedStackEmpty(brackets))
+        return deleteAndReturn(brackets, true);
+    else
+        return deleteAndReturn(brackets, false);
 }
